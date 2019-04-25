@@ -1,29 +1,47 @@
 package com.example.twitterlocationapp
 
+import android.content.Context
+import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import com.twitter.sdk.android.core.Twitter
+import android.location.LocationManager
+import android.util.Log
+import android.widget.Toast
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
+
+class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListener,
+        GoogleMap.OnMyLocationClickListener,
+        OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
+
+    private var longitude: Double = .0
+    private var latitude: Double = .0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        val mapFragment = supportFragmentManager
-                .findFragmentById(R.id.map) as SupportMapFragment
+
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
         Twitter.initialize(this)
+
+        getCurrentLocation()
+    }
+
+    private fun getCurrentLocation() {
+        val lm = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+
+        longitude = location.longitude
+        latitude = location.latitude
     }
 
     /**
@@ -38,9 +56,21 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        val yourLocation = LatLng(latitude, longitude)
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(yourLocation))
+        mMap.animateCamera( CameraUpdateFactory.zoomTo( 13.0f ) )
+        mMap.isMyLocationEnabled = true
+        mMap.setOnMyLocationButtonClickListener(this)
+        mMap.setOnMyLocationClickListener(this)
+    }
+
+    override fun onMyLocationButtonClick(): Boolean {
+        Toast.makeText(this, "MyLocation button clicked", Toast.LENGTH_SHORT).show()
+        return false
+    }
+
+    override fun onMyLocationClick(p0: Location) {
+        Toast.makeText(this, "Current location:\n" + p0, Toast.LENGTH_LONG).show()
     }
 }
