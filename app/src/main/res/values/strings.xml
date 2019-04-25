@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">TwitterLocationApp</string>
     <string name="title_activity_maps">Map</string>
+
+    <string name="com.twitter.sdk.android.CONSUMER_KEY" translatable="false">Mo61R3CRgwe1e2dlDAQ6tkpYz</string>
+    <string name="com.twitter.sdk.android.CONSUMER_SECRET" translatable="false">R1R6gumRiN4guU208Ga6ZZjU19fxYAhntnjDLlDgzdzXQp3loL</string>
 </resources>
