@@ -9,7 +9,6 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-import com.twitter.sdk.android.core.Twitter
 import android.location.LocationManager
 import android.util.Log
 import android.widget.Toast
@@ -31,7 +30,6 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        Twitter.initialize(this)
 
         getCurrentLocation()
     }
