@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">TwitterLocationApp</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="twitter_bearer" translatable="false">AAAAAAAAAAAAAAAAAAAAACi8%2BAAAAAAAzdMJdLmt2%2B4Wvd4h%2BDNR%2F42S7%2BQ%3DXGfT1SmgJixuEL8701kSIVfVSlvACb751EVhe38WI1PGG0yb9C</string>
 </resources>
